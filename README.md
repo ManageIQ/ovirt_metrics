@@ -1,5 +1,7 @@
 # OvirtMetrics
 
+[![Build Status](https://travis-ci.org/ManageIQ/ovirt_metrics.png)](https://travis-ci.org/ManageIQ/ovirt_metrics)
+
 OvirtMetrics is an ActiveRecord-based gem for reading the oVirt History database.
 
 ## Installation
