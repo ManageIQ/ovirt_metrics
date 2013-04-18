@@ -5,8 +5,14 @@ require 'ovirt_metrics'
 describe OvirtMetrics::HostSamplesHistory do
   shared_examples_for "HostSamplesHistory" do
     context "#cpu_usagemhz_rate_average" do
-      before(:each) { @host_configuration = OvirtMetrics::HostConfiguration.new }
+
+      it "when host_configuration is nil" do
+        host_history = described_class.new(:host_configuration => nil)
+        host_history.cpu_usagemhz_rate_average.should == 0
+      end
+
       context "when host_configuration exists" do
+        before(:each) { @host_configuration = OvirtMetrics::HostConfiguration.new }
         it "and speed_in_mhz and number_of_cores is nil" do
           host_history = described_class.new(:host_configuration => @host_configuration)
           host_history.cpu_usagemhz_rate_average.should == 0
