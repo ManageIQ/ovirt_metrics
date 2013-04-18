@@ -16,3 +16,6 @@ RSpec.configure do |config|
 end
 
 require 'support/active_record'
+
+require 'coveralls'
+Coveralls.wear!
