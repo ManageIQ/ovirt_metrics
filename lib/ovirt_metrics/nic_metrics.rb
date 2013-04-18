@@ -1,5 +1,5 @@
 module OvirtMetrics
-  class NicMetrics
+  module NicMetrics
     KILO                = 1024
     MEGA                = 1024 * KILO
     GIGA                = 1024 * MEGA
@@ -23,5 +23,8 @@ module OvirtMetrics
       (bytes_per_second / count) / 1024
     end
 
+    def net_usage_rate_average_in_kilobytes_per_second(nic_metrics)
+      NicMetrics.net_usage_rate_average_in_kilobytes_per_second(nic_metrics)
+    end
   end
 end
