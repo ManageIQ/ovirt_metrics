@@ -1,5 +1,5 @@
 require "ovirt_metrics/version"
-require "ovirt_metrics/constants"
+require "ovirt_metrics/column_definitions"
 require "ovirt_metrics/nic_metrics"
 
 $:.push File.expand_path(File.dirname(__FILE__))
