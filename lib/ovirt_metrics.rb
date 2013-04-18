@@ -1,5 +1,6 @@
 require "ovirt_metrics/version"
 require "ovirt_metrics/constants"
+require "ovirt_metrics/nic_metrics"
 
 $:.push File.expand_path(File.dirname(__FILE__))
 require 'models/ovirt_history'
