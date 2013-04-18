@@ -1,6 +1,6 @@
 # OvirtMetrics
 
-[![Build Status](https://travis-ci.org/ManageIQ/ovirt_metrics.png)](https://travis-ci.org/ManageIQ/ovirt_metrics)
+[![Build Status](https://travis-ci.org/ManageIQ/ovirt_metrics.png?branch=master)](https://travis-ci.org/ManageIQ/ovirt_metrics)
 [![Code Climate](https://codeclimate.com/github/ManageIQ/ovirt_metrics.png)](https://codeclimate.com/github/ManageIQ/ovirt_metrics)
 [![Coverage Status](https://coveralls.io/repos/ManageIQ/ovirt_metrics/badge.png?branch=master)](https://coveralls.io/r/ManageIQ/ovirt_metrics)
 
