@@ -7,7 +7,8 @@ require 'models/ovirt_history'
 Dir.glob(File.expand_path(File.join(File.dirname(__FILE__), "models", "*.rb"))) { |f| require "models/#{File.basename(f, ".*")}" }
 
 module OvirtMetrics
-  DEFAULT_HISTORY_DATABASE_NAME = "ovirt_engine_history".freeze
+  DEFAULT_HISTORY_DATABASE_NAME     = "ovirt_engine_history".freeze
+  DEFAULT_HISTORY_DATABASE_NAME_3_0 = "rhevm_history".freeze
 
   def self.establish_connection(opts)
     self.connect(opts)
