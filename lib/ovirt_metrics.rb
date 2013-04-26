@@ -66,34 +66,10 @@ module OvirtMetrics
   end
 
   def self.host_realtime_metrics_to_hashes(metrics, nic_metrics)
-    counters_by_id              = {}
-    counter_values_by_id_and_ts = {}
+    related_metrics = { }
+    related_metrics[:nic]  = nic_metrics.group_by  { |m| m.history_datetime }
 
-    nic_metrics = nic_metrics.group_by { |m| m.history_datetime }
-
-    metrics.each do |metric|
-      options = {
-        :metric => metric,
-        :nic    => nic_metrics[metric.history_datetime]
-      }
-
-      href = "/api/hosts/#{metric.host_id}"
-      counters_by_id[href] ||= {}
-      values = {}
-
-      HOST_COLUMN_DEFINITIONS.each do |evm_col, info|
-        counters_by_id[href][info[:ovirt_key]] ||= info[:counter]
-        values[info[:ovirt_key]] = info[:ovirt_method].call(options)
-      end
-
-      # For (temporary) symmetry with VIM API having 20-second intervals
-      counter_values_by_id_and_ts[href] ||= {}
-      [0, 20, 40].each do |t|
-        counter_values_by_id_and_ts[href][(metric.history_datetime + t).utc.iso8601] = values
-      end
-    end
-
-    return counters_by_id, counter_values_by_id_and_ts
+    metrics_to_hashes(metrics, related_metrics, HOST_COLUMN_DEFINITIONS, :host_metric_to_href)
   end
 
   def self.query_vm_realtime_metrics(vm_id, start_time = nil, end_time = nil)
@@ -117,24 +93,35 @@ module OvirtMetrics
   end
 
   def self.vm_realtime_metrics_to_hashes(metrics, disk_metrics, nic_metrics)
+    related_metrics = { }
+    related_metrics[:disk] = disk_metrics.group_by { |m| m.history_datetime }
+    related_metrics[:nic]  = nic_metrics.group_by  { |m| m.history_datetime }
+
+    metrics_to_hashes(metrics, related_metrics, VM_COLUMN_DEFINITIONS, :vm_metric_to_href)
+  end
+
+  def self.vm_metric_to_href(metric)
+    "/api/vms/#{metric.vm_id}"
+  end
+
+  def self.host_metric_to_href(metric)
+    "/api/hosts/#{metric.host_id}"
+  end
+
+  def self.metrics_to_hashes(metrics, related_metrics, column_definitions, href_method)
     counters_by_id              = {}
     counter_values_by_id_and_ts = {}
 
-    disk_metrics = disk_metrics.group_by { |m| m.history_datetime }
-    nic_metrics  = nic_metrics.group_by { |m| m.history_datetime }
-
     metrics.each do |metric|
-      options = {
-        :metric => metric,
-        :disk   => disk_metrics[metric.history_datetime],
-        :nic    => nic_metrics[metric.history_datetime]
-      }
+      options = { :metric => metric }
+      related_metrics.each { |key, related_metric| options[key] = related_metric[metric.history_datetime] }
 
-      href = "/api/vms/#{metric.vm_id}"
+      href = self.send(href_method, metric)
+
       counters_by_id[href] ||= {}
       values = {}
 
-      VM_COLUMN_DEFINITIONS.each do |evm_col, info|
+      column_definitions.each do |evm_col, info|
         counters_by_id[href][info[:ovirt_key]] ||= info[:counter]
         values[info[:ovirt_key]] = info[:ovirt_method].call(options)
       end
