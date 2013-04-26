@@ -14,5 +14,11 @@ module OvirtMetrics
       other.primary_key = :history_id
       other.table_name  = other.name.split('::').last.underscore
     end
+
+    def self.with_time_range(start_time = nil, end_time = nil)
+      return scoped if start_time.nil?
+      where(:history_datetime => (start_time..(end_time || Time.now.utc)))
+    end
+
   end
 end

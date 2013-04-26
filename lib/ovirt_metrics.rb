@@ -53,16 +53,12 @@ module OvirtMetrics
   private
 
   def self.query_host_realtime_metrics(host_id, start_time = nil, end_time = nil)
-    query = HostSamplesHistory.where(:host_id => host_id).includes(:host_configuration)
-    query = query.where(:history_datetime => (start_time..(end_time || Time.now.utc))) unless start_time.nil?
-    query
+    HostSamplesHistory.where(:host_id => host_id).includes(:host_configuration).with_time_range(start_time, end_time)
   end
 
   def self.query_host_nic_realtime_metrics(host_id, start_time = nil, end_time = nil)
     nic_ids = HostInterfaceConfiguration.where(:host_id => host_id).collect(&:host_interface_id)
-    query = HostInterfaceSamplesHistory.where(:host_interface_id => nic_ids)
-    query = query.where(:history_datetime => (start_time..(end_time || Time.now.utc))) unless start_time.nil?
-    query
+    HostInterfaceSamplesHistory.where(:host_interface_id => nic_ids).with_time_range(start_time, end_time)
   end
 
   def self.host_realtime_metrics_to_hashes(metrics, nic_metrics)
@@ -73,23 +69,17 @@ module OvirtMetrics
   end
 
   def self.query_vm_realtime_metrics(vm_id, start_time = nil, end_time = nil)
-    query = VmSamplesHistory.where(:vm_id => vm_id).includes(:host_configuration)
-    query = query.where(:history_datetime => (start_time..(end_time || Time.now.utc))) unless start_time.nil?
-    query
+    VmSamplesHistory.where(:vm_id => vm_id).includes(:host_configuration).with_time_range(start_time, end_time)
   end
 
   def self.query_vm_disk_realtime_metrics(vm_id, start_time = nil, end_time = nil)
     disk_ids = DisksVmMap.where(:vm_id => vm_id).collect(&:vm_disk_id)
-    query = VmDiskSamplesHistory.where(:vm_disk_id => disk_ids)
-    query = query.where(:history_datetime => (start_time..(end_time || Time.now.utc))) unless start_time.nil?
-    query
+    VmDiskSamplesHistory.where(:vm_disk_id => disk_ids).with_time_range(start_time, end_time)
   end
 
   def self.query_vm_nic_realtime_metrics(vm_id, start_time = nil, end_time = nil)
     nic_ids = VmInterfaceConfiguration.where(:vm_id => vm_id).collect(&:vm_interface_id)
-    query = VmInterfaceSamplesHistory.where(:vm_interface_id => nic_ids)
-    query = query.where(:history_datetime => (start_time..(end_time || Time.now.utc))) unless start_time.nil?
-    query
+    VmInterfaceSamplesHistory.where(:vm_interface_id => nic_ids).with_time_range(start_time, end_time)
   end
 
   def self.vm_realtime_metrics_to_hashes(metrics, disk_metrics, nic_metrics)
