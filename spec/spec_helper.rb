@@ -17,5 +17,8 @@ end
 
 require 'support/active_record'
 
-require 'coveralls'
-Coveralls.wear!
+begin
+  require 'coveralls'
+  Coveralls.wear!
+rescue LoadError
+end
