@@ -27,7 +27,6 @@ describe OvirtMetrics::HostSamplesHistory do
         end
 
         it "and speed_in_mhz is numeric and number_of_cores is numeric" do
-          host_configuration = OvirtMetrics::HostConfiguration.new
           allow(@host_configuration).to receive_messages(:speed_in_mhz => 2048.0)
           allow(@host_configuration).to receive_messages(:number_of_cores => 2)
 
