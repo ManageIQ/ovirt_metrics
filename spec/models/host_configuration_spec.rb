@@ -6,19 +6,19 @@ describe OvirtMetrics::HostConfiguration do
   shared_examples_for "HostConfiguration" do
     context "#speed_in_mhz" do
       it "when cpu_model is nil" do
-        described_class.new(:cpu_model => nil).speed_in_mhz.should be_nil
+        expect(described_class.new(:cpu_model => nil).speed_in_mhz).to be_nil
       end
 
       it "when cpu_model is in GHz" do
-        described_class.new(:cpu_model => "Intel(R) Xeon(R) CPU E5506 @ 2.00GHz").speed_in_mhz.should == 2048.0
+        expect(described_class.new(:cpu_model => "Intel(R) Xeon(R) CPU E5506 @ 2.00GHz").speed_in_mhz).to eq(2048.0)
       end
 
       it "when cpu_model is in MHz" do
-        described_class.new(:cpu_model => "Intel(R) Xeon(R) CPU E5506 @ 2.00MHz").speed_in_mhz.should == 2.0
+        expect(described_class.new(:cpu_model => "Intel(R) Xeon(R) CPU E5506 @ 2.00MHz").speed_in_mhz).to eq(2.0)
       end
 
       it "when cpu_model is some other string" do
-        described_class.new(:cpu_model => "XXX").speed_in_mhz.should be_nil
+        expect(described_class.new(:cpu_model => "XXX").speed_in_mhz).to be_nil
       end
     end
   end

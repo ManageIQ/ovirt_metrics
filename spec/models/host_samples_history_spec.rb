@@ -8,26 +8,26 @@ describe OvirtMetrics::HostSamplesHistory do
 
       it "when host_configuration is nil" do
         host_history = described_class.new(:host_configuration => nil)
-        host_history.cpu_usagemhz_rate_average.should == 0
+        expect(host_history.cpu_usagemhz_rate_average).to eq(0)
       end
 
       context "when host_configuration exists" do
         before(:each) { @host_configuration = OvirtMetrics::HostConfiguration.new }
         it "and speed_in_mhz and number_of_cores is nil" do
           host_history = described_class.new(:host_configuration => @host_configuration)
-          host_history.cpu_usagemhz_rate_average.should == 0
+          expect(host_history.cpu_usagemhz_rate_average).to eq(0)
         end
 
         it "and speed_in_mhz is nil and number_of_cores is numeric" do
           host_history = described_class.new(:host_configuration => @host_configuration)
           @host_configuration.stub(:number_of_cores => 1)
-          host_history.cpu_usagemhz_rate_average.should == 0
+          expect(host_history.cpu_usagemhz_rate_average).to eq(0)
         end
 
         it "and speed_in_mhz is numeric and number_of_cores is nil" do
           host_history = described_class.new(:host_configuration => @host_configuration)
           @host_configuration.stub(:speed_in_mhz => 2048.0)
-          host_history.cpu_usagemhz_rate_average.should == 0
+          expect(host_history.cpu_usagemhz_rate_average).to eq(0)
         end
 
         it "and speed_in_mhz is numeric and number_of_cores is numeric" do
@@ -39,7 +39,7 @@ describe OvirtMetrics::HostSamplesHistory do
             :cpu_usage_percent  => 50,
             :host_configuration => @host_configuration
           )
-          host_history.cpu_usagemhz_rate_average.should == 2048.0
+          expect(host_history.cpu_usagemhz_rate_average).to eq(2048.0)
         end
       end
     end

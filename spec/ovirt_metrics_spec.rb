@@ -6,7 +6,7 @@ describe OvirtMetrics do
   shared_examples_for "OvirtMetrics" do
     context ".vm_realtime" do
       it "when vm_id finds no matches" do
-        described_class.vm_realtime(42).should == [{}, {}]
+        expect(described_class.vm_realtime(42)).to eq([{}, {}])
       end
 
       it "when vm_id finds 1 match" do
@@ -16,7 +16,7 @@ describe OvirtMetrics do
 
     context ".host_realtime" do
       it "when host_id finds no matches" do
-        described_class.host_realtime(42).should == [{}, {}]
+        expect(described_class.host_realtime(42)).to eq([{}, {}])
       end
 
       it "when host_id finds 1 match" do
@@ -57,7 +57,7 @@ describe OvirtMetrics do
       rows = { href => rows_hash }
 
       method = "#{type}_realtime"
-      described_class.send(method, id).should == [columns, rows]
+      expect(described_class.send(method, id)).to eq([columns, rows])
     end
 
   end
