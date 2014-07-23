@@ -1,7 +1,3 @@
-require File.expand_path(File.join(File.dirname(__FILE__), %w{.. spec_helper}))
-
-require 'ovirt_metrics'
-
 describe OvirtMetrics::VmDiskSamplesHistory do
   KILOBYTE = 1024
   MEGABYTE = KILOBYTE * 1024

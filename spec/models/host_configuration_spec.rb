@@ -1,7 +1,3 @@
-require File.expand_path(File.join(File.dirname(__FILE__), %w{.. spec_helper}))
-
-require 'ovirt_metrics'
-
 describe OvirtMetrics::HostConfiguration do
   shared_examples_for "HostConfiguration" do
     context "#speed_in_mhz" do

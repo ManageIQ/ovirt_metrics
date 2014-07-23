@@ -1,7 +1,3 @@
-require File.expand_path(File.join(File.dirname(__FILE__), %w{.. spec_helper}))
-
-require 'ovirt_metrics'
-
 describe OvirtMetrics::VmSamplesHistory do
   shared_examples_for "VmSamplesHistory" do
     context "#cpu_usagemhz_rate_average" do

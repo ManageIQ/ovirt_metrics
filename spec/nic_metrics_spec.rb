@@ -1,7 +1,3 @@
-require File.expand_path(File.join(File.dirname(__FILE__), "spec_helper"))
-
-require 'ovirt_metrics'
-
 describe OvirtMetrics::NicMetrics do
   context ".net_usage_rate_average_in_kilobytes_per_second" do
     it "when nic_metrics array is empty" do
