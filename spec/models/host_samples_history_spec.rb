@@ -20,20 +20,20 @@ describe OvirtMetrics::HostSamplesHistory do
 
         it "and speed_in_mhz is nil and number_of_cores is numeric" do
           host_history = described_class.new(:host_configuration => @host_configuration)
-          @host_configuration.stub(:number_of_cores => 1)
+          allow(@host_configuration).to receive_messages(:number_of_cores => 1)
           expect(host_history.cpu_usagemhz_rate_average).to eq(0)
         end
 
         it "and speed_in_mhz is numeric and number_of_cores is nil" do
           host_history = described_class.new(:host_configuration => @host_configuration)
-          @host_configuration.stub(:speed_in_mhz => 2048.0)
+          allow(@host_configuration).to receive_messages(:speed_in_mhz => 2048.0)
           expect(host_history.cpu_usagemhz_rate_average).to eq(0)
         end
 
         it "and speed_in_mhz is numeric and number_of_cores is numeric" do
           host_configuration = OvirtMetrics::HostConfiguration.new
-          @host_configuration.stub(:speed_in_mhz => 2048.0)
-          @host_configuration.stub(:number_of_cores => 2)
+          allow(@host_configuration).to receive_messages(:speed_in_mhz => 2048.0)
+          allow(@host_configuration).to receive_messages(:number_of_cores => 2)
 
           host_history = described_class.new(
             :cpu_usage_percent  => 50,

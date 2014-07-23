@@ -14,17 +14,17 @@ describe OvirtMetrics::VmDiskSamplesHistory do
 
       it "when disk_metrics array has one element" do
         disk_metric = double("disk_metric")
-        disk_metric.stub(:read_rate_bytes_per_second => 2.0 * MEGABYTE, :write_rate_bytes_per_second => 1.0 * MEGABYTE)
+        allow(disk_metric).to receive_messages(:read_rate_bytes_per_second => 2.0 * MEGABYTE, :write_rate_bytes_per_second => 1.0 * MEGABYTE)
         expected_result = (disk_metric.read_rate_bytes_per_second + disk_metric.write_rate_bytes_per_second) / KILOBYTE
         expect(described_class.disk_usage_rate_average_in_kilobytes_per_second([disk_metric])).to eq(expected_result)
       end
 
       it "when disk_metrics array has two elements" do
         disk_metric1 = double("disk_metric")
-        disk_metric1.stub(:read_rate_bytes_per_second => 2.0 * MEGABYTE, :write_rate_bytes_per_second => 1.0 * MEGABYTE)
+        allow(disk_metric1).to receive_messages(:read_rate_bytes_per_second => 2.0 * MEGABYTE, :write_rate_bytes_per_second => 1.0 * MEGABYTE)
 
         disk_metric2 = double("disk_metric")
-        disk_metric2.stub(:read_rate_bytes_per_second => 2.0 * MEGABYTE, :write_rate_bytes_per_second => 5.0 * MEGABYTE)
+        allow(disk_metric2).to receive_messages(:read_rate_bytes_per_second => 2.0 * MEGABYTE, :write_rate_bytes_per_second => 5.0 * MEGABYTE)
 
         sum_m1 = disk_metric1.read_rate_bytes_per_second + disk_metric1.write_rate_bytes_per_second
         sum_m2 = disk_metric2.read_rate_bytes_per_second + disk_metric2.write_rate_bytes_per_second

@@ -7,7 +7,7 @@ describe OvirtMetrics::VmSamplesHistory do
     context "#cpu_usagemhz_rate_average" do
       it "when host_configuration is nil" do
         vm_history = described_class.new
-        vm_history.stub(:host_configuration => nil)
+        allow(vm_history).to receive_messages(:host_configuration => nil)
 
         expect(vm_history.cpu_usagemhz_rate_average).to eq(0)
       end
@@ -20,7 +20,7 @@ describe OvirtMetrics::VmSamplesHistory do
 
         it "and speed_in_mhz is not nil" do
           host_configuration = OvirtMetrics::HostConfiguration.new
-          host_configuration.stub(:speed_in_mhz => 2048.0)
+          allow(host_configuration).to receive_messages(:speed_in_mhz => 2048.0)
 
           vm_history = described_class.new(
             :cpu_usage_percent  => 50,
