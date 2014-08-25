@@ -1,12 +1,8 @@
-require File.expand_path(File.join(File.dirname(__FILE__), "spec_helper"))
-
-require 'ovirt_metrics'
-
 describe OvirtMetrics do
   shared_examples_for "OvirtMetrics" do
     context ".vm_realtime" do
       it "when vm_id finds no matches" do
-        described_class.vm_realtime(42).should == [{}, {}]
+        expect(described_class.vm_realtime(42)).to eq([{}, {}])
       end
 
       it "when vm_id finds 1 match" do
@@ -16,7 +12,7 @@ describe OvirtMetrics do
 
     context ".host_realtime" do
       it "when host_id finds no matches" do
-        described_class.host_realtime(42).should == [{}, {}]
+        expect(described_class.host_realtime(42)).to eq([{}, {}])
       end
 
       it "when host_id finds 1 match" do
@@ -40,24 +36,22 @@ describe OvirtMetrics do
 
       href = "/api/#{type.pluralize}/#{id}"
       constant = "OvirtMetrics::#{type.upcase}_COLUMN_DEFINITIONS".constantize
-      column_definitions = constant.each_with_object({}) do |defn, hash|
-        name, defn = defn
+      column_definitions = constant.each_with_object({}) do |(_name, defn), hash|
         key   = defn[:ovirt_key]
         value = defn[:counter]
         hash[key] = value
       end
       columns = { href => column_definitions }
 
-      rows_hash = {}
-      row_value = [0, 20, 40].each_with_object({}) do |offset, hash|
-        key = (record.history_datetime + offset).utc.iso8601.to_s
+      rows_hash = [0, 20, 40].each_with_object({}) do |offset, hash|
         value = column_definitions.keys.each_with_object({}) { |key, col_hash| col_hash[key] = 0.0 }
-        rows_hash[key] = value
+        key   = (record.history_datetime + offset).utc.iso8601.to_s
+        hash[key] = value
       end
       rows = { href => rows_hash }
 
       method = "#{type}_realtime"
-      described_class.send(method, id).should == [columns, rows]
+      expect(described_class.send(method, id)).to eq([columns, rows])
     end
 
   end

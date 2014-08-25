@@ -41,13 +41,13 @@ module OvirtMetrics
     metrics      = query_vm_realtime_metrics(vm_id, start_time, end_time)
     disk_metrics = query_vm_disk_realtime_metrics(vm_id, start_time, end_time)
     nic_metrics  = query_vm_nic_realtime_metrics(vm_id, start_time, end_time)
-    hashes       = vm_realtime_metrics_to_hashes(metrics, disk_metrics, nic_metrics)
+    vm_realtime_metrics_to_hashes(metrics, disk_metrics, nic_metrics)
   end
 
   def self.host_realtime(host_id, start_time = nil, end_time = nil)
     metrics      = query_host_realtime_metrics(host_id, start_time, end_time).all
     nic_metrics  = query_host_nic_realtime_metrics(host_id, start_time, end_time)
-    hashes       = host_realtime_metrics_to_hashes(metrics, nic_metrics)
+    host_realtime_metrics_to_hashes(metrics, nic_metrics)
   end
 
   private
