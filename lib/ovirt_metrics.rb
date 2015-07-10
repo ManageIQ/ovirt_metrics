@@ -112,6 +112,8 @@ module OvirtMetrics
       values = {}
 
       column_definitions.each do |evm_col, info|
+        next if column_definitions == VM_COLUMN_DEFINITIONS && options[:metric].vm_status.to_i == 0
+
         counters_by_id[href][info[:ovirt_key]] ||= info[:counter]
         values[info[:ovirt_key]] = info[:ovirt_method].call(options)
       end
