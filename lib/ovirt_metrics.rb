@@ -9,6 +9,7 @@ Dir.glob(File.expand_path(File.join(File.dirname(__FILE__), "models", "*.rb"))) 
 module OvirtMetrics
   DEFAULT_HISTORY_DATABASE_NAME     = "ovirt_engine_history".freeze
   DEFAULT_HISTORY_DATABASE_NAME_3_0 = "rhevm_history".freeze
+  VM_NOT_RUNNING                    = 0
 
   def self.establish_connection(opts)
     self.connect(opts)
@@ -112,7 +113,7 @@ module OvirtMetrics
       values = {}
 
       column_definitions.each do |evm_col, info|
-        next if column_definitions == VM_COLUMN_DEFINITIONS && options[:metric].vm_status.to_i == 0
+        next if column_definitions == VM_COLUMN_DEFINITIONS && options[:metric].vm_status.to_i == VM_NOT_RUNNING
 
         counters_by_id[href][info[:ovirt_key]] ||= info[:counter]
         values[info[:ovirt_key]] = info[:ovirt_method].call(options)
