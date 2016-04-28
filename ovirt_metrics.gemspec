@@ -30,4 +30,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "coveralls"
 
   spec.add_dependency "activerecord", ">= 4.2.3", "< 5.1"
+  spec.add_dependency "pg"
 end
