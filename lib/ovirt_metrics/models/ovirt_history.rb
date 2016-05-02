@@ -1,5 +1,3 @@
-require 'active_record'
-
 module OvirtMetrics
   class OvirtHistory < ActiveRecord::Base
     self.abstract_class = true

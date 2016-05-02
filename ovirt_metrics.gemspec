@@ -15,18 +15,19 @@ Gem::Specification.new do |spec|
 
   spec.files         = `git ls-files -- lib/*`.split("\n")
   spec.files        += %w[README.md LICENSE.txt]
-  spec.executables   = `git ls-files -- bin/*`.split("\n")
   spec.test_files    = `git ls-files -- spec/*`.split("\n")
   spec.test_files   += %w[.rspec]
   spec.require_paths = ["lib"]
 
-  spec.required_ruby_version = ">= 1.9.3"
+  spec.required_ruby_version = ">= 2.1"
 
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"
+  spec.add_development_dependency "pry"
   spec.add_development_dependency "rspec", ">= 3.0"
   spec.add_development_dependency "sqlite3"
   spec.add_development_dependency "coveralls"
 
   spec.add_dependency "activerecord", ">= 4.2.3", "< 5.1"
+  spec.add_dependency "pg"
 end
