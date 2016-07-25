@@ -107,6 +107,10 @@ module OvirtMetrics
     "/api/hosts/#{metric.host_id}"
   end
 
+  def self.requires_multiplying_data?
+    VmSamplesHistory.column_names.exclude?('seconds_in_status')
+  end
+
   def self.metrics_to_hashes(metrics, related_metrics, column_definitions, href_method)
     counters_by_id              = {}
     counter_values_by_id_and_ts = {}
@@ -129,8 +133,11 @@ module OvirtMetrics
 
       # For (temporary) symmetry with VIM API having 20-second intervals
       counter_values_by_id_and_ts[href] ||= {}
-      [0, 20, 40].each do |t|
-        counter_values_by_id_and_ts[href][(metric.history_datetime + t).utc.iso8601] = values
+      counter_values_by_id_and_ts[href][(metric.history_datetime).utc.iso8601] = values
+      if self.requires_multiplying_data?
+        [20, 40].each do |t|
+          counter_values_by_id_and_ts[href][(metric.history_datetime + t).utc.iso8601] = values
+        end
       end
     end
 
