@@ -43,6 +43,12 @@ def load_rhev_31
   reset_models
 end
 
+def load_rhev_40
+  ActiveRecord::Schema.verbose = false
+  load File.join(File.dirname(__FILE__), %w{.. schemas schema_rhev40.rb})
+  reset_models
+end
+
 def reset_models
   OvirtMetrics.constants.each do |c|
     o = OvirtMetrics.const_get(c)

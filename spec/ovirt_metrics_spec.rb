@@ -1,5 +1,6 @@
 describe OvirtMetrics do
-  shared_examples_for "OvirtMetrics" do
+  shared_examples_for "OvirtMetrics" do |multiplication_required|
+    let(:multiplication_required) { multiplication_required }
     context ".vm_realtime" do
       it "when vm_id finds no matches" do
         expect(described_class.vm_realtime(42)).to eq([{}, {}])
@@ -33,7 +34,6 @@ describe OvirtMetrics do
                   :history_datetime => history_datetime,
       }
       record = klass.create!(record_attrs)
-
       href = "/api/#{type.pluralize}/#{id}"
       constant = "OvirtMetrics::#{type.upcase}_COLUMN_DEFINITIONS".constantize
       column_definitions = constant.each_with_object({}) do |(_name, defn), hash|
@@ -43,13 +43,14 @@ describe OvirtMetrics do
       end
       columns = { href => column_definitions }
 
-      rows_hash = [0, 20, 40].each_with_object({}) do |offset, hash|
+      offsets = multiplication_required ? [0, 20, 40] : [0]
+
+      rows_hash = offsets.each_with_object({}) do |offset, hash|
         value = column_definitions.keys.each_with_object({}) { |key, col_hash| col_hash[key] = 0.0 }
         key   = (record.history_datetime + offset).utc.iso8601.to_s
         hash[key] = value
       end
       rows = { href => rows_hash }
-
       method = "#{type}_realtime"
       expect(described_class.send(method, id)).to eq([columns, rows])
     end
@@ -58,12 +59,17 @@ describe OvirtMetrics do
 
   context "RHEV 3.0" do
     before(:each) { load_rhev_30 }
-    it_should_behave_like "OvirtMetrics"
+    it_should_behave_like "OvirtMetrics", true
   end
 
   context "RHEV 3.1" do
     before(:each) { load_rhev_31 }
-    it_should_behave_like "OvirtMetrics"
+    it_should_behave_like "OvirtMetrics", true
+  end
+
+  context "RHEV 4" do
+    before(:each) { load_rhev_40 }
+    it_should_behave_like "OvirtMetrics", false
   end
 
 end
