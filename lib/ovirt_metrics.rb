@@ -43,7 +43,7 @@ module OvirtMetrics
   end
 
   def self.disconnect
-    OvirtHistory.connection.disconnect!
+    OvirtHistory.remove_connection
   end
 
   def self.vm_realtime(vm_id, start_time = nil, end_time = nil)
