@@ -77,6 +77,7 @@ RSpec.configure do |config|
 end
 
 require 'support/active_record'
+require 'ovirt_metrics'
 
 begin
   require 'coveralls'
@@ -84,4 +85,11 @@ begin
 rescue LoadError
 end
 
-require 'ovirt_metrics'
+OvirtMetrics.config do |c|
+  # Necessary because you currently cannot specify the
+  # connection name for ActiveRecord::Schema, which we use
+  # in tests to reset db schema for different RHEV versions.
+  c.connection_specification_name = 'primary' if ActiveRecord::VERSION::MAJOR >= 5
+end
+ActiveRecord::Base.establish_connection :adapter => "sqlite3", :database => ":memory:"
+

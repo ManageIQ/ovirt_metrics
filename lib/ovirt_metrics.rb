@@ -1,5 +1,6 @@
 require "active_record"
 require "ovirt_metrics/version"
+require "ovirt_metrics/configurator"
 require "ovirt_metrics/column_definitions"
 require "ovirt_metrics/nic_metrics"
 
@@ -11,6 +12,12 @@ module OvirtMetrics
   DEFAULT_HISTORY_DATABASE_NAME     = "ovirt_engine_history".freeze
   DEFAULT_HISTORY_DATABASE_NAME_3_0 = "rhevm_history".freeze
   VM_NOT_RUNNING                    = 0
+
+  def self.config
+    @config ||= Configurator.new
+    yield @config if block_given?
+    @config
+  end
 
   def self.establish_connection(opts)
     self.connect(opts)
@@ -38,8 +45,15 @@ module OvirtMetrics
     OvirtHistory.establish_connection(opts)
   end
 
+  # Note: This method is expected to raise PGErrors and other exceptions
   def self.connected?
-    OvirtHistory.connection.active?
+    OvirtHistory.connection.active? && OvirtHistory.connected?
+  rescue ActiveRecord::ConnectionNotEstablished => e
+    if e.message =~ /No connection pool.+found/
+      false
+    else
+      raise
+    end
   end
 
   def self.disconnect
@@ -57,6 +71,12 @@ module OvirtMetrics
     metrics      = query_host_realtime_metrics(host_id, start_time, end_time).all
     nic_metrics  = query_host_nic_realtime_metrics(host_id, start_time, end_time)
     host_realtime_metrics_to_hashes(metrics, nic_metrics)
+  end
+
+  def self.warn(message)
+    unless config.suppress_warnings
+      puts "#{message}  To hide this warning, use OvirtMetrics.config.suppress_warnings = true"
+    end
   end
 
   # The methods below this line are PRIVATE not meant to be used out of the scope
