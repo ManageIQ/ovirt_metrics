@@ -1,4 +1,6 @@
 source 'https://rubygems.org'
+RAILS_VERSION = ENV.fetch("RAILS_VERSION", "5.0")
 
-# Specify your gem's dependencies in ovirt_metrics.gemspec
+gem "rails", "~> #{RAILS_VERSION}.0"
+
 gemspec
