@@ -1,13 +1,15 @@
 language: ruby
-rvm:
-  - "2.1"
-  - "2.2"
-  - ruby-head
-  - jruby-head
 before_install:
   - gem install bundler
+rvm:
+  - 2.3.2
+  - 2.2.6
+  - 2.1.10
+env:
+  - RAILS_VERSION=5.0
+  - RAILS_VERSION=4.2
 matrix:
-  allow_failures:
-    - rvm: ruby-head
-    - rvm: jruby-head
-  fast_finish: true
+  exclude:
+    - env: RAILS_VERSION=5.0
+      rvm: 2.1.10
+fast_finish: true
