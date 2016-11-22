@@ -59,7 +59,8 @@ module OvirtMetrics
     host_realtime_metrics_to_hashes(metrics, nic_metrics)
   end
 
-  private
+  # The methods below this line are PRIVATE not meant to be used out of the scope
+  # of this class. TODO refactor to force privacy or remove this line.
 
   def self.query_host_realtime_metrics(host_id, start_time = nil, end_time = nil)
     HostSamplesHistory.where(:host_id => host_id).includes(:host_configuration).with_time_range(start_time, end_time)
@@ -82,8 +83,12 @@ module OvirtMetrics
   end
 
   def self.query_vm_disk_realtime_metrics(vm_id, start_time = nil, end_time = nil)
-    disk_ids = DisksVmMap.where(:vm_id => vm_id).collect(&:vm_disk_id)
+    disk_ids = vms_disk_ids_for(vm_id)
     VmDiskSamplesHistory.where(:vm_disk_id => disk_ids).with_time_range(start_time, end_time)
+  end
+
+  def self.vms_disk_ids_for(vm_id)
+    VmDeviceHistory.where(:vm_id => vm_id).disks.attached.pluck('DISTINCT device_id')
   end
 
   def self.query_vm_nic_realtime_metrics(vm_id, start_time = nil, end_time = nil)
