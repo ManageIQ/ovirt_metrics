@@ -1,6 +1,36 @@
 describe OvirtMetrics do
   shared_examples_for "OvirtMetrics" do |multiplication_required|
     let(:multiplication_required) { multiplication_required }
+    describe ".vms_disk_ids_for" do
+      before(:each) do
+        @vm1_id = 1
+        @device_id1 = "device1"
+        @device_id2 = "device2"
+        generic_params = {
+          :vm_id       => @vm1_id,
+          :device_id   => @device_id1,
+          :type        => "disk",
+          :address     => "address",
+          :create_date => 1.week.ago
+        }
+        OvirtMetrics::VmDeviceHistory.create(generic_params)
+        OvirtMetrics::VmDeviceHistory.create(generic_params.merge(:address => "duplicate_with_same_device_id"))
+        OvirtMetrics::VmDeviceHistory.create(generic_params.merge(:device_id => @device_id2))
+        OvirtMetrics::VmDeviceHistory.create(generic_params.merge(:vm_id => 2, :device_id => "disk_from_other_vm"))
+        OvirtMetrics::VmDeviceHistory.create(generic_params.merge(:type      => "nic",
+                                                                  :device_id => "device_of_non_disk_type"))
+        OvirtMetrics::VmDeviceHistory.create(generic_params.merge(:device_id   => "device_that_was_deleted",
+                                                                  :delete_date => 2.days.ago))
+      end
+
+      subject { described_class.vms_disk_ids_for(@vm1_id) }
+
+      it { is_expected.to match_array([@device_id1, @device_id2]) }
+      it { is_expected.not_to include("disk_from_other_vm") }
+      it { is_expected.not_to include("device_of_non_disk_type") }
+      it { is_expected.not_to include("device_that_was_deleted") }
+    end
+
     context ".vm_realtime" do
       it "when vm_id finds no matches" do
         expect(described_class.vm_realtime(42)).to eq([{}, {}])
@@ -55,11 +85,6 @@ describe OvirtMetrics do
       expect(described_class.send(method, id)).to eq([columns, rows])
     end
 
-  end
-
-  context "RHEV 3.0" do
-    before(:each) { load_rhev_30 }
-    it_should_behave_like "OvirtMetrics", true
   end
 
   context "RHEV 3.1" do
