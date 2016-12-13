@@ -1,7 +1,5 @@
 require 'active_record'
 
-ActiveRecord::Base.establish_connection adapter: "sqlite3", database: ":memory:"
-
 module ActiveModel::Validations
   # Extension to enhance `should have` on AR Model instances.  Calls
   # model.valid? in order to prepare the object's errors object.
