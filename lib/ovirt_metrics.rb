@@ -111,8 +111,12 @@ module OvirtMetrics
     VmDeviceHistory.where(:vm_id => vm_id).disks.attached.pluck('DISTINCT device_id')
   end
 
+  def self.vms_nic_ids_for(vm_id)
+    VmDeviceHistory.where(:vm_id => vm_id).nics.attached.pluck("DISTINCT device_id")
+  end
+
   def self.query_vm_nic_realtime_metrics(vm_id, start_time = nil, end_time = nil)
-    nic_ids = VmInterfaceConfiguration.where(:vm_id => vm_id).collect(&:vm_interface_id)
+    nic_ids = vms_nic_ids_for(vm_id)
     VmInterfaceSamplesHistory.where(:vm_interface_id => nic_ids).with_time_range(start_time, end_time)
   end
 
