@@ -5,6 +5,7 @@ module OvirtMetrics
     self.inheritance_column = :_type_disabled
 
     scope :disks,    -> { where(:type => "disk") }
+    scope :nics,     -> { where(:type => "interface") }
     scope :attached, -> { where(:delete_date => nil) }
   end
 end
