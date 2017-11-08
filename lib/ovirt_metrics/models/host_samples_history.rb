@@ -4,7 +4,7 @@ module OvirtMetrics
 
     def cpu_usagemhz_rate_average
       return 0.0 if self.host_configuration.nil?
-      speed_of_host = self.host_configuration.speed_in_mhz.to_f * self.host_configuration.number_of_cores.to_i
+      speed_of_host = self.host_configuration.cpu_speed_mh.to_f * self.host_configuration.number_of_cores.to_i
       return (speed_of_host * (self.cpu_usage_percent.to_f / 100.0))
     end
   end

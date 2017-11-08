@@ -30,13 +30,13 @@ describe OvirtMetrics::VmDiskSamplesHistory do
     end
   end
 
-  context "RHEV 3.0" do
-    before(:each) { load_rhev_30 }
+  context "RHEV 3.1" do
+    before(:each) { load_rhev_31 }
     it_should_behave_like "VmDiskSamplesHistory"
   end
 
-  context "RHEV 3.1" do
-    before(:each) { load_rhev_31 }
+  context "RHEV 4" do
+    before(:each) { load_rhev_40 }
     it_should_behave_like "VmDiskSamplesHistory"
   end
 end
