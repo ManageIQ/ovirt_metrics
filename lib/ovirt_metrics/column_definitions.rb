@@ -21,7 +21,7 @@ module OvirtMetrics
         :counter_key           => "cpu_usagemhz_rate_average",
         :instance              => "",
         :capture_interval      => "20",
-        :precision             => 2,
+        :precision             => 1,
         :rollup                => "average",
         :unit_key              => "megahertz",
         :capture_interval_name => "realtime"
@@ -55,7 +55,7 @@ module OvirtMetrics
         :counter_key           => "disk_usage_rate_average",
         :instance              => "",
         :capture_interval      => "20",
-        :precision             => 2,
+        :precision             => 1,
         :rollup                => "average",
         :unit_key              => "kilobytespersecond",
         :capture_interval_name => "realtime"
@@ -69,7 +69,7 @@ module OvirtMetrics
         :counter_key           => "net_usage_rate_average",
         :instance              => "",
         :capture_interval      => "20",
-        :precision             => 2,
+        :precision             => 1,
         :rollup                => "average",
         :unit_key              => "kilobytespersecond",
         :capture_interval_name => "realtime"
@@ -89,7 +89,7 @@ module OvirtMetrics
         :counter_key           => "net_usage_rate_average",
         :instance              => "",
         :capture_interval      => "20",
-        :precision             => 2,
+        :precision             => 1,
         :rollup                => "average",
         :unit_key              => "kilobytespersecond",
         :capture_interval_name => "realtime"
