@@ -9,14 +9,14 @@ describe OvirtMetrics::VmSamplesHistory do
       end
 
       context "when host_configuration exists" do
-        it "and speed_in_mhz is nil" do
+        it "and cpu_speed_mh is nil" do
           vm_history = described_class.new(:host_configuration => OvirtMetrics::HostConfiguration.new)
           expect(vm_history.cpu_usagemhz_rate_average).to eq(0)
         end
 
-        it "and speed_in_mhz is not nil" do
+        it "and cpu_speed_mh is not nil" do
           host_configuration = OvirtMetrics::HostConfiguration.new
-          allow(host_configuration).to receive_messages(:speed_in_mhz => 2048.0)
+          allow(host_configuration).to receive_messages(:cpu_speed_mh => 2048.0)
 
           vm_history = described_class.new(
             :cpu_usage_percent  => 50,
@@ -26,11 +26,6 @@ describe OvirtMetrics::VmSamplesHistory do
         end
       end
     end
-  end
-
-  context "RHEV 3.0" do
-    before(:each) { load_rhev_30 }
-    it_should_behave_like "VmSamplesHistory"
   end
 
   context "RHEV 3.1" do

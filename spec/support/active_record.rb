@@ -29,12 +29,6 @@ RSpec.configure do |config|
   end
 end
 
-def load_rhev_30
-  ActiveRecord::Schema.verbose = false
-  load File.join(File.dirname(__FILE__), %w{.. schemas schema_rhev30.rb})
-  reset_models
-end
-
 def load_rhev_31
   ActiveRecord::Schema.verbose = false
   load File.join(File.dirname(__FILE__), %w{.. schemas schema_rhev31.rb})
