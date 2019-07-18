@@ -31,6 +31,7 @@ Gem::Specification.new do |spec|
   # HACK: Rails 5 dropped support for Ruby < 2.2.2
   active_gems_version = "< 5" if Gem::Version.new(RUBY_VERSION) <= Gem::Version.new("2.2.2")
   spec.add_dependency "activerecord", ">= 4.2.3", (active_gems_version || "< 5.2")
+  spec.add_dependency 'sqlite3', "~> 1.3.6"
 
   spec.add_dependency "pg"
 end
