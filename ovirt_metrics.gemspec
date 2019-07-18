@@ -19,18 +19,15 @@ Gem::Specification.new do |spec|
   spec.test_files   += %w[.rspec]
   spec.require_paths = ["lib"]
 
-  spec.required_ruby_version = ">= 2.1"
+  spec.required_ruby_version = ">= 2.3.1"
 
-  spec.add_development_dependency "bundler", "~> 1.3"
+  spec.add_development_dependency "bundler"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "pry"
   spec.add_development_dependency "rspec", ">= 3.0"
-  spec.add_development_dependency "sqlite3"
+  spec.add_development_dependency "sqlite3", "~> 1.3.6"
   spec.add_development_dependency "coveralls"
 
-  # HACK: Rails 5 dropped support for Ruby < 2.2.2
-  active_gems_version = "< 5" if Gem::Version.new(RUBY_VERSION) <= Gem::Version.new("2.2.2")
-  spec.add_dependency "activerecord", ">= 4.2.3", (active_gems_version || "< 5.2")
-
+  spec.add_dependency "activerecord", "< 5.3"
   spec.add_dependency "pg"
 end
