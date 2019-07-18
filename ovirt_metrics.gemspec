@@ -21,11 +21,11 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = ">= 2.1"
 
-  spec.add_development_dependency "rake"
+  spec.add_development_dependency "coveralls"
   spec.add_development_dependency "pry"
+  spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec", ">= 3.0"
   spec.add_development_dependency "sqlite3"
-  spec.add_development_dependency "coveralls"
 
   # HACK: Rails 5 dropped support for Ruby < 2.2.2
   active_gems_version = "< 5" if Gem::Version.new(RUBY_VERSION) <= Gem::Version.new("2.2.2")
