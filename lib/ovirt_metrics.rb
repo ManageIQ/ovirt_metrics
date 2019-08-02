@@ -27,7 +27,10 @@ module OvirtMetrics
     opts            ||= {}
     opts[:port]     ||= 5432
     opts[:database] ||= DEFAULT_HISTORY_DATABASE_NAME
-    opts[:adapter]    = 'postgresql'
+    opts[:adapter] = begin
+                       require "active_record/connection_adapters/ovirt_postgresql_adapter"
+                       'ovirt_postgresql'
+                     end
 
     # Don't allow accidental connections to localhost.  A blank host will
     # connect to localhost, so don't allow that at all.
