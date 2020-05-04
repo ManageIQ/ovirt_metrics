@@ -28,6 +28,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "sqlite3", "~> 1.3.6"
   spec.add_development_dependency "coveralls"
 
-  spec.add_dependency "activerecord", "< 5.3"
+  spec.add_dependency "activerecord", "< 6.1"
   spec.add_dependency "pg"
 end
