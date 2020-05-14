@@ -4,7 +4,6 @@
 [![Build Status](https://travis-ci.org/ManageIQ/ovirt_metrics.svg?branch=master)](https://travis-ci.org/ManageIQ/ovirt_metrics)
 [![Code Climate](http://img.shields.io/codeclimate/github/ManageIQ/ovirt_metrics.svg)](https://codeclimate.com/github/ManageIQ/ovirt_metrics)
 [![Coverage Status](http://img.shields.io/coveralls/ManageIQ/ovirt_metrics.svg)](https://coveralls.io/r/ManageIQ/ovirt_metrics)
-[![Dependency Status](https://gemnasium.com/ManageIQ/ovirt_metrics.svg)](https://gemnasium.com/ManageIQ/ovirt_metrics)
 
 OvirtMetrics is an ActiveRecord-based gem for reading the oVirt History database.
 
