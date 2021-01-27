@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   spec.test_files   += %w[.rspec]
   spec.require_paths = ["lib"]
 
-  spec.required_ruby_version = ">= 2.3.1"
+  spec.required_ruby_version = ">= 2.5.8"
 
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "coveralls"
@@ -27,7 +27,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "pry"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec",         ">= 3.0"
-  spec.add_development_dependency "sqlite3",       "~> 1.3.6"
+  spec.add_development_dependency "sqlite3"
 
   spec.add_dependency "activerecord", "< 6.1"
   spec.add_dependency "pg"
