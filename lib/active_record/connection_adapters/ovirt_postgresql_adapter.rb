@@ -11,7 +11,8 @@ module ActiveRecord
       valid_conn_param_keys = PG::Connection.conndefaults_hash.keys + [:requiressl]
       conn_params.slice!(*valid_conn_param_keys)
 
-      ConnectionAdapters::OvirtPostgreSQLAdapter.new(nil, logger, conn_params, config)
+      conn = PG.connect(conn_params) if ActiveRecord::VERSION::MAJOR >= 6
+      ConnectionAdapters::OvirtPostgreSQLAdapter.new(conn, logger, conn_params, config)
     end
   end
 
