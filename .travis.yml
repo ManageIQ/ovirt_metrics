@@ -1,9 +1,9 @@
 language: ruby
 rvm:
-  - 2.5.8
-  - 2.6.6
-  - 2.7.2
-  - 3.0.0
-env:
-  - RAILS_VERSION=6.0
+  - 2.6.9
+  - 2.7.5
+  - 3.0.3
+gemfile:
+  - gemfiles/activerecord_6.0.gemfile
+  - gemfiles/activerecord_6.1.gemfile
 fast_finish: true

@@ -1,13 +1,7 @@
 require "bundler/gem_tasks"
+require "rspec/core/rake_task"
 
-begin
-  require "rspec/core/rake_task"
-
-  RSpec::Core::RakeTask.new(:spec) do
-    puts "Testing with Rails #{ENV["RAILS_VERSION"]}..." if ENV["RAILS_VERSION"]
-  end
-rescue LoadError
-end
+RSpec::Core::RakeTask.new(:spec)
 
 task :test => :spec
 task :default => :spec
