@@ -4,6 +4,7 @@ rvm:
   - 2.6.6
   - 2.7.2
   - 3.0.0
-env:
-  - RAILS_VERSION=6.0
+gemfile:
+  - gemfiles/activerecord_6.0.gemfile
+  - gemfiles/activerecord_6.1.gemfile
 fast_finish: true
