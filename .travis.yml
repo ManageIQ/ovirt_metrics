@@ -3,7 +3,8 @@ rvm:
   - 2.6.9
   - 2.7.5
   - 3.0.3
-gemfile:
-  - gemfiles/activerecord_6.0.gemfile
-  - gemfiles/activerecord_6.1.gemfile
+env:
+  matrix:
+    - TEST_RAILS_VERSION=6.1
+    - TEST_RAILS_VERSION=6.0
 fast_finish: true
