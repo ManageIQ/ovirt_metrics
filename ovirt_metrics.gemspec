@@ -21,7 +21,6 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = ">= 2.5.8"
 
-  spec.add_development_dependency "appraisal"
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "coveralls"
   spec.add_development_dependency "manageiq-style"
