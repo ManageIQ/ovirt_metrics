@@ -2,9 +2,14 @@ source 'https://rubygems.org'
 
 gemspec
 
-case ENV['TEST_RAILS_VERSION']
-when "6.0"
-  gem "activerecord", "~>6.0.4"
-when "6.1"
-  gem "activerecord", "~>6.1.4"
-end
+minimum_version =
+  case ENV['TEST_RAILS_VERSION']
+  when "6.0"
+    "~>6.0.4"
+  when "7.0"
+    "~>7.0.8"
+  else
+    "~>6.1.4"
+  end
+
+gem "activerecord", minimum_version
