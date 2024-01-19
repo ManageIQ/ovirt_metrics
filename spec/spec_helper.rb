@@ -88,7 +88,12 @@ OvirtMetrics.config do |c|
   # Necessary because you currently cannot specify the
   # connection name for ActiveRecord::Schema, which we use
   # in tests to reset db schema for different RHEV versions.
-  c.connection_specification_name = 'primary' if ActiveRecord::VERSION::MAJOR >= 5
+  case ActiveRecord::VERSION::MAJOR
+  when 7
+    c.connection_specification_name = 'ActiveRecord::Base'
+  else
+    c.connection_specification_name = 'primary'
+  end
 end
 ActiveRecord::Base.establish_connection :adapter => "sqlite3", :database => ":memory:"
 
