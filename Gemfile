@@ -13,3 +13,6 @@ minimum_version =
   end
 
 gem "activerecord", minimum_version
+
+# sqlite3 doesn't bundle properly with Rails 7.0 or less.
+gem "sqlite3", "< 2"
