@@ -97,6 +97,5 @@ OvirtMetrics.config do |c|
 end
 ActiveRecord::Base.establish_connection :adapter => "sqlite3", :database => ":memory:"
 
-require "active_record"
 puts
 puts "\e[93mUsing ActiveRecord #{ActiveRecord.version}\e[0m"

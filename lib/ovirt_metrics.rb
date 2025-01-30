@@ -1,3 +1,4 @@
+require "logger" # Require logger due to active_support breaking on Rails <= 7.0. See https://github.com/rails/rails/pull/54264
 require "active_record"
 require "ovirt_metrics/version"
 require "ovirt_metrics/configurator"
