@@ -17,6 +17,8 @@ module ActiveRecord
   end
 
   module ConnectionAdapters
+    require 'active_record/connection_adapters/postgresql_adapter'
+
     class OvirtPostgreSQLAdapter < PostgreSQLAdapter
       ADAPTER_NAME = "OvirtPostgreSQL"
 
