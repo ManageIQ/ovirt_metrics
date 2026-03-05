@@ -95,7 +95,9 @@ OvirtMetrics.config do |c|
     c.connection_specification_name = 'primary'
   end
 end
-ActiveRecord::Base.establish_connection :adapter => "sqlite3", :database => ":memory:"
+
+require "active_record/connection_adapters/ovirt_postgresql_adapter"
+ActiveRecord::Base.establish_connection :adapter => "ovirt_postgresql", :database => "ovirt_engine_history", :user => "root", :host => "localhost", :password => "smartvm"
 
 puts
 puts "\e[93mUsing ActiveRecord #{ActiveRecord.version}\e[0m"
