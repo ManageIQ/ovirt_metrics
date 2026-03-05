@@ -22,6 +22,10 @@ module ActiveRecord
     class OvirtPostgreSQLAdapter < PostgreSQLAdapter
       ADAPTER_NAME = "OvirtPostgreSQL"
 
+      if ActiveRecord::VERSION::MAJOR > 7 || (ActiveRecord::VERSION::MAJOR == 7 && ActiveRecord::VERSION::MINOR >= 2)
+        ActiveRecord::ConnectionAdapters.register('ovirt_postgresql', self)
+      end
+
       def check_version
         msg = "The version of PostgreSQL (#{postgresql_version}) is too old (9.2+ required)"
         if postgresql_version < 90200
