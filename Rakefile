@@ -22,7 +22,7 @@ namespace :spec do
 
       # Connect to postgres database to create the target database
       begin
-        conn = PG.connect(dbname: 'postgres', host: ENV['PGHOST'] || 'localhost', user: ENV['POSTGRES_USER'] || 'root', password: ENV['PGPASSWORD'] || 'smartvm')
+        conn = PG.connect(dbname: 'postgres', host: ENV['PGHOST'] || 'localhost', user: ENV['PGUSER'] || 'root', password: ENV['PGPASSWORD'] || 'smartvm')
 
         # Check if database exists
         result = conn.exec_params('SELECT 1 FROM pg_database WHERE datname = $1', [db_name])
@@ -54,7 +54,7 @@ namespace :spec do
           adapter: 'postgresql',
           database: db_name,
           host: ENV['PGHOST'] || 'localhost',
-          username: ENV['POSTGRES_USER'] || 'root',
+          username: ENV['PGUSER'] || 'root',
           password: ENV['POSTGRES_PASSWORD'] || 'smartvm'
         )
 
